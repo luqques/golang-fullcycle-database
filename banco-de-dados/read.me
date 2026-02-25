@@ -1,2 +1,18 @@
-Comando para rodar o docker-compose.yaml e subir um container de banco de dados MySql, após rodar o Docker na máquina:
+1. Comando para rodar o docker-compose.yaml e subir um container de banco de dados MySql, após rodar o Docker na máquina:
 docker-compose.yaml up -d
+
+Obs: caso ele não starte, pode ser pq já tem o MySQL da própria máquina rodando na porta em específico.
+
+___________________
+2. Comando para executar e entrar no container MySql após o start do container
+docker-compose exec mysql bash
+
+___________________
+3. Comando para logar no banco
+mysql -u root -p goexpert
+
+Enter password: root
+
+___________________
+4. Comando para criar as tabelas
+create table products (id varchar(255), name varchar(80), price decimal(10,2), primary key (id));
