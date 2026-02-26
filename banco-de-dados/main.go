@@ -42,6 +42,12 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(product.Name, "atualizado no banco de dados!")
+
+	productSelected, err := selectProduct(db, product.ID)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Produto selecionado: %s - R$ %.2f\n", productSelected.Name, productSelected.Price)
 }
 
 func insertProduct(db *sql.DB, product *Product) error {
@@ -68,4 +74,18 @@ func updateProduct(db *sql.DB, product *Product) error {
 		return err
 	}
 	return nil
+}
+
+func selectProduct(db *sql.DB, id string) (*Product, error) {
+	stmt, err := db.Prepare("select id, name, price from products where id = ?")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	var product Product
+	err = stmt.QueryRow(id).Scan(&product.ID, &product.Name, &product.Price)
+	if err != nil {
+		return nil, err
+	}
+	return &product, nil
 }
