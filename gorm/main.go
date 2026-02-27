@@ -6,7 +6,7 @@ import (
 )
 
 type Product struct {
-	ID    string `gorm:"primaryKey"`
+	ID    uint `gorm:"primaryKey"`
 	Name  string
 	Price float64
 }
@@ -18,4 +18,16 @@ func main() {
 		panic(err)
 	}
 	db.AutoMigrate(&Product{})
+
+	db.Create(&Product{
+		Name:  "Notebook",
+		Price: 1999.90,
+	})
+
+	products := []Product{
+		{Name: "Mouse", Price: 100.00},
+		{Name: "Teclado", Price: 200.00},
+		{Name: "Monitor", Price: 1500.00},
+	}
+	db.Create(&products)
 }
