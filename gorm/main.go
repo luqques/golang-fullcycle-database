@@ -48,4 +48,10 @@ func main() {
 	for _, product := range productsList {
 		fmt.Println(product)
 	}
+
+	product.Name = "Notebook Gamer"
+	product.Price = 5000.00
+	db.Save(&product)
+
+	db.Delete(&product)
 }
