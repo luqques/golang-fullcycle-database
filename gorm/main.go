@@ -8,10 +8,17 @@ import (
 )
 
 type Product struct {
-	ID    uint `gorm:"primaryKey"`
-	Name  string
-	Price float64
+	ID         uint `gorm:"primaryKey"`
+	Name       string
+	Price      float64
+	CategoryID uint
+	Category   Category
 	gorm.Model
+}
+
+type Category struct {
+	ID   uint `gorm:"primaryKey"`
+	Name string
 }
 
 func main() {
@@ -20,7 +27,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&Product{})
+	db.AutoMigrate(&Product{}, &Category{})
 
 	db.Create(&Product{
 		Name:  "Notebook",
